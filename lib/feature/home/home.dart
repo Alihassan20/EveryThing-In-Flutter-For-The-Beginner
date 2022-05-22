@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,6 +14,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
+
 //ــــــــــــــــــــــــــــــ   appbar   ـــــــــــــــــــــــــــــــــــــــ
 
   AppBar buildAppBar() {
@@ -394,15 +398,88 @@ class _HomeState extends State<Home> {
               showDialogWidgets(context);
             }, child: const Text("Show Dialog")),
             getImageWithCamera(context),
-            buildRaisedButtonToLaunchlink()
+            buildRaisedButtonToLaunchlink(),
 
 
+          ],
+        ),
+      ),
+      floatingActionButton: Builder(
+        builder: (context) => FabCircularMenu(
+          key: fabKey,
+          // Cannot be `Alignment.center`
+          alignment: Alignment.bottomRight,
+          ringColor: Colors.blue.withAlpha(50),
+          ringDiameter: 500.0,
+          ringWidth: 150.0,
+          fabSize: 64.0,
+          fabElevation: 8.0,
+          fabIconBorder: CircleBorder(),
+          // Also can use specific color based on wether
+          // the menu is open or not:
+          // fabOpenColor: Colors.white
+          // fabCloseColor: Colors.white
+          // These properties take precedence over fabColor
+          fabColor: Colors.blue,
+          fabOpenIcon: Icon(Icons.menu, color: Colors.black),
+          fabCloseIcon: Icon(Icons.close, color: Colors.black),
+          fabMargin: const EdgeInsets.all(16.0),
+          animationDuration: const Duration(milliseconds: 800),
+          animationCurve: Curves.easeInOutCirc,
+          // onDisplayChange: (isOpen) {
+          //   _showSnackBar(context, "The menu is ${isOpen ? "open" : "closed"}");
+          // },
+          children: <Widget>[
+            RawMaterialButton(
+              onPressed: () {
+                _showSnackBar(context, "You pressed 1");
+              },
+              shape: CircleBorder(),
+              padding: const EdgeInsets.all(24.0),
+              child: Icon(Icons.looks_one, color: Colors.black),
+            ),
+            RawMaterialButton(
+              onPressed: () {
+                _showSnackBar(context, "You pressed 2");
+              },
+              shape: CircleBorder(),
+              padding: const EdgeInsets.all(24.0),
+              child: Icon(Icons.looks_two, color: Colors.black),
+            ),
+            RawMaterialButton(
+              onPressed: () {
+                _showSnackBar(context, "You pressed 3");
+              },
+              shape: CircleBorder(),
+              padding: const EdgeInsets.all(24.0),
+              child: Icon(Icons.looks_3, color: Colors.black),
+            ),
+            RawMaterialButton(
+              onPressed: () {
+                _showSnackBar(context, "You pressed 4. This one closes the menu on tap");
+                fabKey.currentState!.close();
+              },
+              shape: CircleBorder(),
+              padding: const EdgeInsets.all(24.0),
+              child: Icon(Icons.looks_4, color: Colors.black),
+            )
           ],
         ),
       ),
     );
   }
 }
+void _showSnackBar(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 1000),
+      )
+  );
+}
+
+
+
 
 showDialogWidgets(BuildContext context) => showDialog(
   context: context,

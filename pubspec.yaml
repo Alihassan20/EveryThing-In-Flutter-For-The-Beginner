@@ -37,6 +37,8 @@ dependencies:
   image_picker: ^0.8.5+3
   url_launcher:
   fab_circular_menu: ^1.0.2
+  flutter_hooks: ^0.18.4
+
 
 dev_dependencies:
   flutter_test:

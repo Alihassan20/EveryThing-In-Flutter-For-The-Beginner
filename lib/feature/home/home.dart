@@ -16,6 +16,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
+  Offset position = Offset(100, 100);
+  double prevScale = 1;
+  double scale = 1;
+
+  void updateScale(double zoom) => setState(() => scale = prevScale * zoom);
+  void commitScale() => setState(() => prevScale = scale);
+  void updatePosition(Offset newPosition) =>
+      setState(() => position = newPosition);
+
 
 //ــــــــــــــــــــــــــــــ   appbar   ـــــــــــــــــــــــــــــــــــــــ
 
@@ -399,6 +408,57 @@ class _HomeState extends State<Home> {
             }, child: const Text("Show Dialog")),
             getImageWithCamera(context),
             buildRaisedButtonToLaunchlink(),
+            GestureDetector(
+              onScaleUpdate: (details) => updateScale(details.scale),
+              onScaleEnd: (_) => commitScale(),
+              child: Container(
+                height: 100,
+                width: 100,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                        child: Container(color: Colors.amber.withOpacity(.4))),
+                    Positioned(
+                      left: position.dx,
+                      top: position.dy,
+                      child: Draggable(
+                        maxSimultaneousDrags: 1,
+                        feedback:Icon(Icons.ten_mp),
+                        childWhenDragging: Opacity(
+                          opacity: .3,
+                          child: Icon(Icons.ten_mp),
+                        ),
+                        onDragEnd: (details) => updatePosition(details.offset),
+                        child: Transform.scale(
+                          scale: scale,
+                          child: Icon(Icons.ten_mp),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Draggable<String>(
+              childWhenDragging: Container(),
+
+              // Data is the value this Draggable stores.
+              data: 'red',
+              child: Container(
+                height: 120.0,
+                width: 120.0,
+                child: Center(
+                  child: Icon(Icons.menu),
+                ),
+              ),
+              feedback: Container(
+                height: 120.0,
+                width: 120.0,
+                child: Center(
+                  child: Icon(Icons.menu),
+                ),
+              ),
+            ),
 
 
           ],

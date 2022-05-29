@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../widgets/flar_class.dart';
 
 class Home extends StatefulWidget {
@@ -386,85 +386,144 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  bool _isContainerVisible = true; // in top of your class
 
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            NavBar(),
-            buildRadioWithDialog(),
-            buildCheckBoxListTile(context),
-            buildRadioListTileContainer(),
-            buildSlider(),
-            Text('${_value.round()}'),
-            buildRichText(),
-            buildSelectableText(),
-            buildToast(),
-            buildTransform(),
-            TextButton(onPressed: (){
-              showDialogWidgets(context);
-            }, child: const Text("Show Dialog")),
-            getImageWithCamera(context),
-            buildRaisedButtonToLaunchlink(),
-            GestureDetector(
-              onScaleUpdate: (details) => updateScale(details.scale),
-              onScaleEnd: (_) => commitScale(),
-              child: Container(
-                height: 100,
-                width: 100,
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                        child: Container(color: Colors.amber.withOpacity(.4))),
-                    Positioned(
-                      left: position.dx,
-                      top: position.dy,
-                      child: Draggable(
-                        maxSimultaneousDrags: 1,
-                        feedback:Icon(Icons.ten_mp),
-                        childWhenDragging: Opacity(
-                          opacity: .3,
-                          child: Icon(Icons.ten_mp),
-                        ),
-                        onDragEnd: (details) => updatePosition(details.offset),
-                        child: Transform.scale(
-                          scale: scale,
-                          child: Icon(Icons.ten_mp),
-                        ),
+      body:  OfflineBuilder(
+        connectivityBuilder: (
+            BuildContext context,
+            ConnectivityResult connectivity,
+            Widget child,
+            ) {
+          final bool connected = connectivity != ConnectivityResult.none;
+          if(connected){
+            Future.delayed(Duration(seconds: 3)).then((value) {
+              if(mounted) {
+                setState((){
+                  _isContainerVisible = false;
+                });
+              }
+            });
+
+              }
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 350),
+                    child: connected
+                        ? _isContainerVisible ? Container(
+                        color: Colors.lightGreenAccent[400],
+                        height: 25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const <Widget>[
+                            Text(
+                              'ONLINE',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        )):Container()
+                        : Container(
+                      color: Colors.red,
+                      height: 25,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const <Widget>[
+                          Text(
+                            'OFFLINE',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(width: 8.0),
+                          SizedBox(
+                            width: 12.0,
+                            height: 12.0,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.0,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white),
+                            ),
+                          ),
+                        ],
                       ),
+                    ))      ,
+                NavBar(),
+                buildRadioWithDialog(),
+                buildCheckBoxListTile(context),
+                buildRadioListTileContainer(),
+                buildSlider(),
+                Text('${_value.round()}'),
+                buildRichText(),
+                buildSelectableText(),
+                buildToast(),
+                buildTransform(),
+                TextButton(onPressed: (){
+                  showDialogWidgets(context);
+                }, child: const Text("Show Dialog")),
+                getImageWithCamera(context),
+                buildRaisedButtonToLaunchlink(),
+                GestureDetector(
+                  onScaleUpdate: (details) => updateScale(details.scale),
+                  onScaleEnd: (_) => commitScale(),
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                            child: Container(color: Colors.amber.withOpacity(.4))),
+                        Positioned(
+                          left: position.dx,
+                          top: position.dy,
+                          child: Draggable(
+                            maxSimultaneousDrags: 1,
+                            feedback:Icon(Icons.ten_mp),
+                            childWhenDragging: Opacity(
+                              opacity: .3,
+                              child: Icon(Icons.ten_mp),
+                            ),
+                            onDragEnd: (details) => updatePosition(details.offset),
+                            child: Transform.scale(
+                              scale: scale,
+                              child: Icon(Icons.ten_mp),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            Draggable<String>(
-              childWhenDragging: Container(),
-              // Data is the value this Draggable stores.
-              data: 'red',
-              child: Container(
-                height: 120.0,
-                width: 120.0,
-                child: Center(
-                  child: Icon(Icons.menu),
+                Draggable<String>(
+                  childWhenDragging: Container(),
+                  // Data is the value this Draggable stores.
+                  data: 'red',
+                  child: Container(
+                    height: 120.0,
+                    width: 120.0,
+                    child: Center(
+                      child: Icon(Icons.menu),
+                    ),
+                  ),
+                  feedback: Container(
+                    height: 120.0,
+                    width: 120.0,
+                    child: Center(
+                      child: Icon(Icons.menu),
+                    ),
+                  ),
                 ),
-              ),
-              feedback: Container(
-                height: 120.0,
-                width: 120.0,
-                child: Center(
-                  child: Icon(Icons.menu),
-                ),
-              ),
-            ),
 
 
-          ],
-        ),
+              ],
+            ),
+          );
+        },
+        child: Text("")
       ),
       floatingActionButton: Builder(
         builder: (context) => FabCircularMenu(

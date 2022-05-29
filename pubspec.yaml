@@ -39,7 +39,7 @@ dependencies:
   fab_circular_menu: ^1.0.2
   flutter_hooks: ^0.18.4
   flare_flutter:
-
+  flutter_offline:
 
 dev_dependencies:
   flutter_test:

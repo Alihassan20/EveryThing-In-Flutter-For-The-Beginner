@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../widgets/flar_class.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -394,6 +396,7 @@ class _HomeState extends State<Home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            NavBar(),
             buildRadioWithDialog(),
             buildCheckBoxListTile(context),
             buildRadioListTileContainer(),
@@ -441,7 +444,6 @@ class _HomeState extends State<Home> {
             ),
             Draggable<String>(
               childWhenDragging: Container(),
-
               // Data is the value this Draggable stores.
               data: 'red',
               child: Container(
@@ -529,6 +531,10 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+
+
+
 void _showSnackBar(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

@@ -42,6 +42,8 @@ dependencies:
   flutter_offline:
   local_auth:
   vertical_card_pager:
+  http:
+  html:
 
 dev_dependencies:
   flutter_test:

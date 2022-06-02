@@ -10,6 +10,9 @@ import '../../widgets/appbar.dart';
 import '../../widgets/check_box.dart';
 import '../../widgets/flar_class.dart';
 import '../../widgets/radio2+2.dart';
+import '../../widgets/radio_listTile.dart';
+import '../../widgets/rich_text.dart';
+import '../../widgets/slider_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -21,7 +24,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
-  Offset position = Offset(100, 100);
+  Offset position = const Offset(100, 100);
   double prevScale = 1;
   double scale = 1;
 
@@ -31,79 +34,6 @@ class _HomeState extends State<Home> {
       setState(() => position = newPosition);
 
 
-
-
-
-
-
-  //ــــــــــــــــــــــــــــــ   radioList red,green   ـــــــــــــــــــــــــــــــــــــــ
-
-  var radioValue = 0;
-  Container buildRadioListTileContainer() {
-    return Container(
-      color: radioValue == 0 ? Colors.red : Colors.green,
-      padding: const EdgeInsets.all(30),
-      child: Column(
-        children: [
-          buildRadioListTile(0, "Red", "Changed to Red"),
-          buildRadioListTile(1, "Green", "Changed to Green"),
-        ],
-      ),
-    );
-  }
-  RadioListTile<int> buildRadioListTile(val, String txt, String subTxt) {
-    return RadioListTile(
-      value: val,
-      groupValue: radioValue,
-      onChanged: (value) {
-        setState(() {
-          radioValue = value as int;
-        });
-      },
-      title: Text('$txt'),
-      subtitle: Text("$subTxt"),
-    );
-  }
-//ــــــــــــــــــــــــــــــ   Slider   ـــــــــــــــــــــــــــــــــــــــ
-
-  double _value=0.0;
-  Slider buildSlider() {
-    return Slider(
-        activeColor: Colors.blueGrey,
-        inactiveColor: Colors.black26,
-        label: _value.round().toString(),
-        min: 0,
-        max: 100,
-        divisions: 100,
-        value: _value,
-        onChanged: (double val) {
-          setState(() {
-            _value = val;
-          });
-        });
-  }
-//ــــــــــــــــــــــــــــــ   RichText   ـــــــــــــــــــــــــــــــــــــــ
-
-  RichText buildRichText() {
-    return RichText(
-      text: const TextSpan(children: [
-        TextSpan(
-          text: "ali",
-          style:  TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.deepPurpleAccent),
-        ),
-         TextSpan(
-          text: " hassan",
-          style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.blueAccent),
-        )
-      ]),
-    );
-  }
 //ــــــــــــــــــــــــــــــ   SelectecdText   ـــــــــــــــــــــــــــــــــــــــ
 
   Center buildSelectableText() {
@@ -125,10 +55,11 @@ class _HomeState extends State<Home> {
         //     backgroundColor: Colors.black54,
         //     textColor: Colors.white);
       },
-      child: Text("Toast"),
+      child: const Text("Toast"),
     );
   }
 //ــــــــــــــــــــــــــــــ   Transform   ـــــــــــــــــــــــــــــــــــــــ
+  double _value=0.0;
   Transform buildTransform() {
     return Transform.rotate(
       angle: _value * (pi / 180),
@@ -158,43 +89,43 @@ class _HomeState extends State<Home> {
       children: [
         Center(
           child:
-          _image == null ? Text("No Image Selected") : Image.file(_image!),
+          _image == null ? const Text("No Image Selected") : Image.file(_image!),
         ),
         ElevatedButton(onPressed: (){
           showDialog(
               context: context,
               builder: (BuildContext ctx) {
                 return AlertDialog(
-                  title: Text("Choose picture from"),
+                  title: const Text("Choose picture from"),
                   content: Container(
                     height: 200,
                     width: double.infinity,
                     child: Column(
                       children: [
-                        Divider(
+                        const Divider(
                           color: Colors.black,
                         ),
                         Container(
                           width: 300,
                           color: Colors.teal,
                           child: ListTile(
-                            leading: Icon(Icons.image),
-                            title: Text("Gallery"),
+                            leading: const Icon(Icons.image),
+                            title: const Text("Gallery"),
                             onTap: () {
                               getImagePhoto(ImageSource.gallery);
                               Navigator.of(ctx).pop();
                             },
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Container(
                           width: 300,
                           color: Colors.teal,
                           child: ListTile(
-                            leading: Icon(Icons.add_a_photo),
-                            title: Text("Camera"),
+                            leading: const Icon(Icons.add_a_photo),
+                            title: const Text("Camera"),
                             onTap: () {
                               getImagePhoto(ImageSource.camera);
                               Navigator.of(ctx).pop();
@@ -222,7 +153,7 @@ class _HomeState extends State<Home> {
     return Center(
       child: TextButton.icon(
         onPressed: _launchUrl,
-        icon: Icon(Icons.account_box_outlined),
+        icon: const Icon(Icons.account_box_outlined),
         label: Text(str),
       ),
     );
@@ -242,7 +173,7 @@ class _HomeState extends State<Home> {
             ) {
           final bool connected = connectivity != ConnectivityResult.none;
           if(connected){
-            Future.delayed(Duration(seconds: 3)).then((value) {
+            Future.delayed(const Duration(seconds: 3)).then((value) {
               if(mounted) {
                 setState((){
                   _isContainerVisible = false;
@@ -295,8 +226,8 @@ class _HomeState extends State<Home> {
                     ))      ,
                 NavBar(),
                 const buildRadioWithDialog(),
-                buildCheckBoxListTile(),
-                buildRadioListTileContainer(),
+                const buildCheckBoxListTile(),
+                const buildRadioListTileContainer(),
                 buildSlider(),
                 Text('${_value.round()}'),
                 buildRichText(),
@@ -323,15 +254,15 @@ class _HomeState extends State<Home> {
                           top: position.dy,
                           child: Draggable(
                             maxSimultaneousDrags: 1,
-                            feedback:Icon(Icons.ten_mp),
-                            childWhenDragging: Opacity(
+                            feedback:const Icon(Icons.ten_mp),
+                            childWhenDragging: const Opacity(
                               opacity: .3,
                               child: Icon(Icons.ten_mp),
                             ),
                             onDragEnd: (details) => updatePosition(details.offset),
                             child: Transform.scale(
                               scale: scale,
-                              child: Icon(Icons.ten_mp),
+                              child: const Icon(Icons.ten_mp),
                             ),
                           ),
                         ),
@@ -346,14 +277,14 @@ class _HomeState extends State<Home> {
                   child: Container(
                     height: 120.0,
                     width: 120.0,
-                    child: Center(
+                    child: const Center(
                       child: Icon(Icons.menu),
                     ),
                   ),
                   feedback: Container(
                     height: 120.0,
                     width: 120.0,
-                    child: Center(
+                    child: const Center(
                       child: Icon(Icons.menu),
                     ),
                   ),
@@ -364,7 +295,7 @@ class _HomeState extends State<Home> {
             ),
           );
         },
-        child: Text("")
+        child: const Text("")
       ),
       floatingActionButton: Builder(
         builder: (context) => FabCircularMenu(
@@ -376,15 +307,15 @@ class _HomeState extends State<Home> {
           ringWidth: 150.0,
           fabSize: 64.0,
           fabElevation: 8.0,
-          fabIconBorder: CircleBorder(),
+          fabIconBorder: const CircleBorder(),
           // Also can use specific color based on wether
           // the menu is open or not:
           // fabOpenColor: Colors.white
           // fabCloseColor: Colors.white
           // These properties take precedence over fabColor
           fabColor: Colors.blue,
-          fabOpenIcon: Icon(Icons.menu, color: Colors.black),
-          fabCloseIcon: Icon(Icons.close, color: Colors.black),
+          fabOpenIcon: const Icon(Icons.menu, color: Colors.black),
+          fabCloseIcon: const Icon(Icons.close, color: Colors.black),
           fabMargin: const EdgeInsets.all(16.0),
           animationDuration: const Duration(milliseconds: 800),
           animationCurve: Curves.easeInOutCirc,
@@ -396,34 +327,34 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 _showSnackBar(context, "You pressed 1");
               },
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               padding: const EdgeInsets.all(24.0),
-              child: Icon(Icons.looks_one, color: Colors.black),
+              child: const Icon(Icons.looks_one, color: Colors.black),
             ),
             RawMaterialButton(
               onPressed: () {
                 _showSnackBar(context, "You pressed 2");
               },
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               padding: const EdgeInsets.all(24.0),
-              child: Icon(Icons.looks_two, color: Colors.black),
+              child: const Icon(Icons.looks_two, color: Colors.black),
             ),
             RawMaterialButton(
               onPressed: () {
                 _showSnackBar(context, "You pressed 3");
               },
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               padding: const EdgeInsets.all(24.0),
-              child: Icon(Icons.looks_3, color: Colors.black),
+              child: const Icon(Icons.looks_3, color: Colors.black),
             ),
             RawMaterialButton(
               onPressed: () {
                 _showSnackBar(context, "You pressed 4. This one closes the menu on tap");
                 fabKey.currentState!.close();
               },
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               padding: const EdgeInsets.all(24.0),
-              child: Icon(Icons.looks_4, color: Colors.black),
+              child: const Icon(Icons.looks_4, color: Colors.black),
             )
           ],
         ),

@@ -40,6 +40,7 @@ dependencies:
   flutter_hooks: ^0.18.4
   flare_flutter:
   flutter_offline:
+  local_auth:
 
 dev_dependencies:
   flutter_test:

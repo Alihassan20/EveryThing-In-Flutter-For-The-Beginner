@@ -41,6 +41,7 @@ dependencies:
   flare_flutter:
   flutter_offline:
   local_auth:
+  vertical_card_pager:
 
 dev_dependencies:
   flutter_test:

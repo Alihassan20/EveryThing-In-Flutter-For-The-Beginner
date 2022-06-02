@@ -44,6 +44,7 @@ dependencies:
   vertical_card_pager:
   http:
   html:
+  sms_user_consent:
 
 dev_dependencies:
   flutter_test:

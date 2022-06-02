@@ -2,10 +2,12 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 class MenuItem {
+  late final int id;
+
   final String name;
   final Color color;
   final double x;
-  MenuItem({required this.name, required this.color, required this.x});
+  MenuItem({required this.name, required this.color, required this.x,required this.id});
 }
 
 class NavBar extends StatefulWidget {
@@ -14,11 +16,11 @@ class NavBar extends StatefulWidget {
 
 class NavBarState extends State<NavBar> {
   List items = [
-    MenuItem(x: -1.0, name: 'house', color: const Color.fromRGBO(178, 228, 250, 1)),
-    MenuItem(x: -0.5, name: 'planet', color: Colors.purple),
-    MenuItem(x: 0.0, name: 'camera', color: Colors.greenAccent),
-    MenuItem(x: 0.5, name: 'heart', color: Colors.pink),
-    MenuItem(x: 1.0, name: 'head', color: Colors.yellow),
+    MenuItem(x: -1.0, name: 'house', color: const Color.fromRGBO(178, 228, 250, 1),id: 0),
+    MenuItem(x: -0.5, name: 'planet', color: Colors.purple,id: 1),
+    MenuItem(x: 0.0, name: 'camera', color: Colors.greenAccent,id: 2),
+    MenuItem(x: 0.5, name: 'heart', color: Colors.pink,id: 3),
+    MenuItem(x: 1.0, name: 'head', color: Colors.yellow,id: 4),
   ];
 
   MenuItem? active;
@@ -34,8 +36,12 @@ class NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     return Container(
-      height: 60,
-      color: Colors.black,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15) ),
+        color: Colors.black87,
+
+      ),
+      height: 75,
       child: Stack(
         children: [
           AnimatedContainer(
@@ -57,6 +63,20 @@ class NavBarState extends State<NavBar> {
               }).toList(),
             ),
           ),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            alignment: Alignment(active!.x, 1),
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 1000),
+              height: 16,
+              width: w * 0.21,
+              child:  Center(child: Text(active!.name,
+                style: TextStyle(color: active!.color,fontWeight: FontWeight.bold,fontSize: 15),)),
+            ),
+          ),
+
+
+
         ],
       ),
     );
@@ -65,12 +85,11 @@ class NavBarState extends State<NavBar> {
   Widget _flare(MenuItem item) {
     return GestureDetector(
       child: AspectRatio(
-        aspectRatio: 1,
+        aspectRatio: 0.8,
         child: Padding(
-          padding: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.only(top: 12),
           child: FlareActor(
             'assets/${item.name}.flr',
-
             alignment: Alignment.topCenter,
             fit: BoxFit.contain,
             animation: item.name == active!.name ? 'go' : 'idle',
@@ -80,6 +99,7 @@ class NavBarState extends State<NavBar> {
       onTap: () {
         setState(() {
           active = item;
+          active!.id=item.id;
         });
       },
     );

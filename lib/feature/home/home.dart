@@ -12,6 +12,7 @@ import '../../widgets/flar_class.dart';
 import '../../widgets/radio2+2.dart';
 import '../../widgets/radio_listTile.dart';
 import '../../widgets/rich_text.dart';
+import '../../widgets/select_text.dart';
 import '../../widgets/slider_widget.dart';
 
 class Home extends StatefulWidget {
@@ -36,15 +37,7 @@ class _HomeState extends State<Home> {
 
 //ــــــــــــــــــــــــــــــ   SelectecdText   ـــــــــــــــــــــــــــــــــــــــ
 
-  Center buildSelectableText() {
-    return const Center(
-        child: SelectableText(
-          "MY NAME IS ALI ELMAHDY AND IAM ZAMALEK FAN",
-          cursorColor: Colors.deepPurple,
-          showCursor: true,
-          cursorWidth: 5,
-        ));
-  }
+
 //ــــــــــــــــــــــــــــــ   Toast   ـــــــــــــــــــــــــــــــــــــــ
 
   ElevatedButton buildToast() {

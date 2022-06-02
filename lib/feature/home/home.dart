@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../widgets/appbar.dart';
 import '../../widgets/flar_class.dart';
+import '../../widgets/radio2+2.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -28,85 +30,10 @@ class _HomeState extends State<Home> {
       setState(() => position = newPosition);
 
 
-//ــــــــــــــــــــــــــــــ   appbar   ـــــــــــــــــــــــــــــــــــــــ
 
-  AppBar buildAppBar() {
-  return AppBar(
-    leading: Padding(
-      padding: const EdgeInsets.only(left: 1),
-      child: IconButton(
-        onPressed: () {},
-        icon: const Icon(
-          Icons.account_balance,
-        ),
-      ),
-    ),
-    flexibleSpace: Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.blueGrey, Colors.black12])),
-    ),
-    title: const Text(
-      'Test App',
-      style: TextStyle(
-          fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
-    ),
-    centerTitle: true,
-    actions: [
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(
-          Icons.account_balance,
-        ),
-      ),
-    ],
-  );
-}
 //ــــــــــــــــــــــــــــــ   radio list 2+2   ـــــــــــــــــــــــــــــــــــــــ
 
-  int radioValue2 = 0;
-  String  result = '';
-  Color resultColor = Colors.yellow;
-  Container buildRadioWithDialog() {
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(30),
-      child: Column(
-        children: [
-          const Text(
-            ' Guess The Answer :   2+2 = ? \n',
-            style:  TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-          buildRadio1(3),
-          buildRadio1(4),
-          buildRadio1(5),
-        ],
-      ),
-    );
-  } Row buildRadio1(int value) {
-    return Row(
-      children: [
-        Radio(
-            value: value,
-            groupValue: radioValue2,
-            onChanged: (val) {
-              setState(() {
-                radioValue2 = val as int;
-                result = value == 4 ? "Correct Answer 👏" : "Wrong Answer 👎";
-                resultColor = value == 4 ? Colors.black : Colors.red;
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text(result.toString(),style: TextStyle(color: resultColor),),
-                  ),
-                );
-              });
-            }),
-        Text("$value"),
-      ],
-    );
-  }
+
 //ــــــــــــــــــــــــــــــ  C# checkBox    ـــــــــــــــــــــــــــــــــــــــ
 
   Set<String> txt={};
@@ -453,7 +380,7 @@ class _HomeState extends State<Home> {
                       ),
                     ))      ,
                 NavBar(),
-                buildRadioWithDialog(),
+                const buildRadioWithDialog(),
                 buildCheckBoxListTile(context),
                 buildRadioListTileContainer(),
                 buildSlider(),

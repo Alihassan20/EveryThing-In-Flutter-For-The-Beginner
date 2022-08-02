@@ -17,10 +17,10 @@
   </p>
   # And More Widgets .......................
   <p float="left">
-    <img src="https://user-images.githubusercontent.com/43120067/182369653-bdabfb72-34bd-4362-a173-731fef4a1a36.png" width="250" >
-    <img src="https://user-images.githubusercontent.com/43120067/182369801-6e4f77ab-2b34-411c-baca-de11203714aa.png" width="250" >
-    <img src="https://user-images.githubusercontent.com/43120067/182369824-2deef5fa-cd46-47a6-9cfd-32f7aeb91064.png" width="250" >
-    <img src="https://user-images.githubusercontent.com/43120067/182369891-7b9dafa5-c796-4e7b-acdf-e25fba932086.png" width="250" >
+    <img src="https://user-images.githubusercontent.com/43120067/182369653-bdabfb72-34bd-4362-a173-731fef4a1a36.png" width="220" >
+    <img src="https://user-images.githubusercontent.com/43120067/182369801-6e4f77ab-2b34-411c-baca-de11203714aa.png" width="220" >
+    <img src="https://user-images.githubusercontent.com/43120067/182369824-2deef5fa-cd46-47a6-9cfd-32f7aeb91064.png" width="220" >
+    <img src="https://user-images.githubusercontent.com/43120067/182369891-7b9dafa5-c796-4e7b-acdf-e25fba932086.png" width="220" >
     </p>
 
 
